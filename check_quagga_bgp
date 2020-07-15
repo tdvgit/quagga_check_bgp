@@ -1,4 +1,12 @@
 #!/bin/sh
+
+if [ -z "$1" ]
+then
+echo "You must to specify the neighbor IP address"
+echo "Try './check_bgp IP'"
+exit 1
+fi
+
 prx=`/usr/bin/sudo /usr/bin/vtysh -e 'sh ip bgp su' | grep $1 | /usr/bin/awk '{ print $10 }'`
 if [ -z "$prx" ]
 then
