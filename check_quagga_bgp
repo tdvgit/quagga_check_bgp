@@ -1,0 +1,18 @@
+#!/bin/sh
+prx=`/usr/bin/sudo /usr/bin/vtysh -e 'sh ip bgp su' | grep $1 | /usr/bin/awk '{ print $10 }'`
+if [ -z "$prx" ]
+then
+echo "Critical - Neighbor not found"
+exit 1
+elif [ $prx = 'Idle' ]
+then
+echo "Critical - Idle state"
+exit 1
+elif [ $prx = 'Active' ]
+then
+echo "Critical - Active state"
+exit 1
+else
+echo "OK - Neighbor $1"
+exit 0
+fi
